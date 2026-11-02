@@ -33,8 +33,14 @@
             # Only the isolated headless test lacks Chromium's namespace sandbox.
             # The installed launcher never adds --no-sandbox.
             export DISCODE_TEST_NO_SANDBOX=1
-            dbus-run-session -- xvfb-run -a node ${./test/nix-smoke.cjs} \
-              ${self.packages.${system}.discode}/bin/discode > "$out" 2>&1
+            if ! ${pkgs.dbus.out}/bin/dbus-run-session \
+              --config-file=${pkgs.dbus.out}/share/dbus-1/session.conf -- \
+              ${pkgs.xvfb-run}/bin/xvfb-run -a ${pkgs.nodejs_24}/bin/node ${./test/nix-smoke.cjs} \
+              ${self.packages.${system}.discode}/bin/discode > "$TMPDIR/smoke.log" 2>&1; then
+              cat "$TMPDIR/smoke.log"
+              exit 1
+            fi
+            cp "$TMPDIR/smoke.log" "$out"
           '';
         });
     };

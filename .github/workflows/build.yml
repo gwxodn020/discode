@@ -2,6 +2,14 @@ name: Build desktop apps
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'flake.nix'
+      - 'flake.lock'
+      - 'nix/**'
+      - 'test/nix-smoke.cjs'
+      - '.github/workflows/nix.yml'
+      - 'docs/**'
+      - 'README.md'
   pull_request:
   workflow_dispatch:
 permissions:
