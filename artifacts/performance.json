@@ -1,0 +1,35 @@
+{
+  "workload": {
+    "messages": 300,
+    "channels": 200,
+    "updates": 10,
+    "idleWindowMs": 4200
+  },
+  "method": "Fresh Electron profile, synthetic Discord page, synchronous render timings. Excludes real Discord workload, total CPU usage, and process RSS.",
+  "before": {
+    "idleWindowMs": 4200,
+    "idleFullScans": 4,
+    "messages": 300,
+    "channels": 200,
+    "updates": 10,
+    "medianRenderMs": 38,
+    "maxRenderMs": 46.10000002384186,
+    "addedNodes": 11269,
+    "removedNodes": 11231,
+    "firstMessageRetained": false,
+    "navRetained": false
+  },
+  "after": {
+    "idleWindowMs": 4200,
+    "idleFullScans": 0,
+    "messages": 300,
+    "channels": 200,
+    "updates": 10,
+    "medianRenderMs": 4,
+    "maxRenderMs": 6.199999988079071,
+    "addedNodes": 38,
+    "removedNodes": 0,
+    "firstMessageRetained": true,
+    "navRetained": true
+  }
+}
