@@ -1,0 +1,40 @@
+name: NixOS package
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'flake.nix'
+      - 'flake.lock'
+      - 'nix/**'
+      - '*.js'
+      - 'package.json'
+      - 'ui/**'
+      - 'assets/icon.png'
+      - 'test/nix-smoke.cjs'
+      - '.github/workflows/nix.yml'
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nix-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  nix:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: cachix/install-nix-action@75c75c31ebece974e48ebc36b4ad125bd97bd97b # v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Validate flake and ARM64 package evaluation
+        run: |
+          nix flake check --no-build --no-update-lock-file
+          nix eval --raw .#packages.aarch64-linux.discode.drvPath --no-update-lock-file
+      - name: Build NixOS-compatible package
+        run: nix build .#discode --no-update-lock-file
+      - name: Test Nix runtime under X11 with a synthetic Discord page
+        run: |
+          nix build .#checks.x86_64-linux.smoke --no-update-lock-file --out-link smoke-result
+          cat smoke-result

@@ -37,6 +37,10 @@ DMG를 열어 앱을 Applications로 옮기거나, Windows 설치 프로그램�
 | `⌘B` / `Ctrl+B` | 탐색기 접기·펼치기 |
 | `⌘J` / `Ctrl+J` | 터미널 표시 전환 |
 
+## NixOS / Linux
+
+NixOS용 flake 패키지를 제공합니다. 저장소를 clone한 뒤 `nix run .#discode`로 실행할 수 있습니다. NixOS 설정·사용자 프로필 설치와 검증 범위는 [NixOS 안내](docs/nixos.md)를 참고하세요.
+
 ## 개발
 
 Node.js 22 이상이 필요하며 CI는 Node.js 24를 사용합니다.
